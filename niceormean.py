@@ -1,3 +1,5 @@
+from playsound import playsound
+
 
 def start(nice = 0, mean = 0, name = ""):
 	# get user's name
@@ -58,13 +60,14 @@ def score(nice,mean,name):
 def win(nice,mean,name):
 	#subsitute the {} wildcards with our variable values
 	print("\nNice Job {}, you win! \nEveryone loves you and you've \nmade lots of friends along the way!".format(name))
+	playsound('cheering.mp3')
 	# call again function and pass in our variables
 	again(nice,mean,name)
 
 def lose(nice,mean,name):
 	#subsitute the { } wildcards with our variable values
 	print("\nAhhh too bad, game over! \n{}, you live in a dirty beat-up \nvan by the river, wretched and alone!".format(name))
-	# playsound('cheering.mp3')
+	
 	#call again function and pass in our variables
 	again(nice,mean,name)
 
