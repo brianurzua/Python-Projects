@@ -15,9 +15,14 @@ class Major(Students): # Child Class
 		self.major = major
 		self.focus = focus
 
+	def fullname(self): # Method to create full name
+		return '{} {}'.format(self.first, self.last)
+
+
 class Advisor(Students):
-	def __init__(self, first, last, students=None): #This adds student to advisor
-		super().__init__(first, last)
+	def __init__(self, first, last, schedule, students=None): #This adds student to advisor
+		super().__init__(first, last,)
+		self.schedule = schedule
 		if students is None:
 			self.students = []
 		else:
@@ -35,7 +40,7 @@ class Advisor(Students):
 student_1 = Major('Eren', 'Jaeger', 'Titan', 'War titan')
 student_2 = Major('Mikasa', 'Ackerman', 'Titan', 'Slayer')
 
-adv_1 = Advisor('Hange', 'Zoe', [student_1])
+adv_1 = Advisor('Hange', 'Zoe', 'Day', [student_1])
 
 
 print(student_1.email)
