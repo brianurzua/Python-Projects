@@ -23,6 +23,10 @@ class ourDog:
 	def changeName(self, name):
 		self.__name = name
 
+	# This is a protected variable
+	def protectedName(self):
+		self._Pname = 'Naruto'
+
 D = ourDog()
 D.Command()
 
@@ -31,3 +35,6 @@ D.Command()
 
 D.changeName('Sasuke') # Use the setter to change name
 D.Command()
+
+D._Pname = 'Rock Lee'
+print(D._Pname)
