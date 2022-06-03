@@ -9,8 +9,9 @@
 import tkinter
 from tkinter import *
 from tkinter import filedialog
-import ShutilAssignment2
-
+import os
+import shutil
+import datetime
 
 class ParentWindow(Frame):
 	def __init__ (self, master):
@@ -30,32 +31,46 @@ class ParentWindow(Frame):
 		self.btnMoveTo.grid(row=1, column=0, padx=(15,0), pady=(15,15), sticky=W)
 
 		# Input boxes to find
-		self.txtBrowse_1 = Entry(self.master, text=" ", font=('Helvetica', 12), fg='black', bg='white', width=38)
+		self.txtBrowse_1 = Entry(self.master, font=('Helvetica', 12), fg='black', bg='white', width=38)
 		self.txtBrowse_1.grid(row=0, column=1, columnspan=2, padx=(15,0), pady=(15,15), sticky=NW)
 
-		self.txtBrowse_2 = Entry(self.master, text=" ", font=('Helvetica', 12), fg='black', bg='white', width=38)
+		self.txtBrowse_2 = Entry(self.master, font=('Helvetica', 12), fg='black', bg='white', width=38)
 		self.txtBrowse_2.grid(row=1, column=1, columnspan=2, padx=(15,0), pady=(15,15), sticky=NW)
 
 		# Buttons for moving files and closing program
-		self.btnMoveFile = Button(self.master, text='Move Files...', width=12, height=2)
+		self.btnMoveFile = Button(self.master, text='Move Files...', width=12, height=2, command=self.fileCheck)
 		self.btnMoveFile.grid(row=2, column=0, padx=(15,0), pady=(15,15), sticky=SW)
 
 		self.btnClose = Button(self.master, text='Close Program', width=12, height=2, command=self.closeProg)
 		self.btnClose.grid(row=2, column=1, padx=(267), pady=(15,15), sticky=SE)
 
 	def findDir(self):
-	    userInp1 = self.txtBrowse_1.get()
-	    directory = filedialog.askdirectory(initialdir="C:/Users/{}".format(userInp1))
+	    directory = filedialog.askdirectory()
 	    self.txtBrowse_1.insert(0,directory)
-	    return
+	    
 	def findDir2(self):
-	    userInp2 = self.txtBrowse_2.get()
-	    directory = filedialog.askdirectory(initialdir="C:/Users/{}".format(userInp2))
+	    directory = filedialog.askdirectory()
 	    self.txtBrowse_2.insert(0,directory)
-	    return
+
 
 	def closeProg(self):
 		self.master.destroy()
+
+	def fileCheck(self):
+		source = self.txtBrowse_1.get()
+		dest = self.txtBrowse_2.get()
+		allFiles = os.listdir(source)
+		now = datetime.datetime.now() # gets current time
+		before = now - datetime.timedelta(hours=24) # gets time of 24 hours ago
+		for i in allFiles:
+			filePath = source+'/'+i
+			timestamp = os.path.getmtime(filePath)
+			dateMod = datetime.datetime.fromtimestamp(timestamp)
+
+			if dateMod > before:
+				destFile = dest+'/'+i
+				shutil.move(filePath, dest)
+				# print('Files have been moved from {} to {}'.format(filePath, destFile))
 
 
 
